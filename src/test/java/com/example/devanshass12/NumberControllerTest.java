@@ -39,7 +39,10 @@ package com.example.devanshass12;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -56,12 +59,15 @@ class NumberControllerTest {
     void testDoubleNumberEndpoint() throws Exception {
 
         int inputNumber = 5;
-        int expectedResult = 10;
 
 
-        mockMvc.perform(get("/double").param("number", String.valueOf(inputNumber)))
+        mockMvc.perform(MockMvcRequestBuilders.get("/double")
+                        .param("number", String.valueOf(inputNumber))
+                        .contentType(MediaType.APPLICATION_JSON))
+                // Then
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString(String.valueOf(expectedResult))));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().string("10"));
     }
 }
 

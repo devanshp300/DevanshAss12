@@ -22,15 +22,15 @@ class HttpRequestTest {
 
     @Test
     void testDoubleNumberEndpoint() {
-        // Given
+
         int inputNumber = 5;
 
-        // When
+
         ResponseEntity<Integer> response = restTemplate.getForEntity(
                 "http://localhost:" + port + "/double?number={number}", Integer.class, inputNumber);
 
-        // Then
+
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEqualTo(10); // Expected doubled value
+        assertThat(response.getBody()).isEqualTo(10);
     }
 }
